@@ -12,6 +12,7 @@ public class BlogService {
   private final BlogRepository blogRepository;
 
   public Article save(AddArticleRequest request){
+    System.out.println("----- service -----" + request.toEntity());
     return blogRepository.save(request.toEntity());
   }
 }
