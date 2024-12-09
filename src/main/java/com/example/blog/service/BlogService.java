@@ -3,6 +3,7 @@ package com.example.blog.service;
 import com.example.blog.domain.Article;
 import com.example.blog.dto.AddArticleRequest;
 import com.example.blog.repository.BlogRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +15,8 @@ public class BlogService {
   public Article save(AddArticleRequest request){
     return blogRepository.save(request.toEntity());
   }
+  public List<Article> findAll(){
+    return blogRepository.findAll();
+  }
+
 }
