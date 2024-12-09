@@ -12,19 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController // HTTP Response Body에 객체 데이터를 JSON 형식으로 반환하는 컨트롤러
-@RequestMapping("/blog")
+@RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class BlogController {
 
   private final BlogService blogService;
   private final BlogRepository blogRepository;
 
-  @PostMapping("/v1/articles")
+  @PostMapping("/articles")
   public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request){
-    // @RequestBody 로 요청 본문 값 매핑
     Article savedArticle = blogService.save(request);
-    System.out.println("----- controller -----" + request.getTitle());
+
     return ResponseEntity.status(HttpStatus.CREATED)
         .body(savedArticle);
   }
