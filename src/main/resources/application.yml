@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: blog
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:blogtestdb
+    initialize: true
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    show-sql: true
