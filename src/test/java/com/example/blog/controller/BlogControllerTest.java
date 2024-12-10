@@ -1,6 +1,7 @@
 package com.example.blog.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -109,13 +110,35 @@ class BlogControllerTest {
         .build());
 
     // when
-    // 이거 get 에다가 pathVariable 한 거 맞낭?
     final ResultActions resultActions = mockMvc.perform(get(url, savedArticle.getId()));
 
     // then
     resultActions
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].content").value(content))
-        .andExpect(jsonPath("$[0].title").value(title));
+        .andExpect(jsonPath("$.title").value(title))
+        .andExpect(jsonPath("$.content").value(content));
+  }
+
+  @DisplayName("deleteArticle: 블로그 글 삭제에 성공한다")
+  @Test
+  public void deleteArticle() throws Exception{
+    // given
+    final String url = "/api/article/{id}";
+    final String title = "title";
+    final String content = "content";
+
+    Article savedArticle = blogRepository.save(Article.builder()
+        .title(title)
+        .content(content)
+        .build());
+
+    // when
+    mockMvc.perform(delete(url, savedArticle.getId()))
+        .andExpect(status().isOk());
+
+    // then
+    List<Article> articles = blogRepository.findAll();
+
+    assertThat(articles).isEmpty();
   }
 }
