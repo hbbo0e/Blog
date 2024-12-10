@@ -19,4 +19,10 @@ public class BlogService {
     return blogRepository.findAll();
   }
 
+  // findById 에서 orElseThrow 를 하지 않으면 에러가 나오던데 왜그런걸까
+  public Article findById(long id){
+    return blogRepository.findById(id).orElseThrow(()
+        -> new IllegalArgumentException("not found : " + id));
+  }
+
 }
