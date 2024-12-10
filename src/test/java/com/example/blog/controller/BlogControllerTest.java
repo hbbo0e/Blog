@@ -115,7 +115,7 @@ class BlogControllerTest {
     // then
     resultActions
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].content").value(content))
-        .andExpect(jsonPath("$[0].title").value(title));
+        .andExpect(jsonPath("$.title").value(title))
+        .andExpect(jsonPath("$.content").value(content));
   }
 }
