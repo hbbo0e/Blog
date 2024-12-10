@@ -4,7 +4,6 @@ import com.example.blog.domain.Article;
 import com.example.blog.dto.AddArticleRequest;
 import com.example.blog.dto.ArticleResponse;
 import com.example.blog.dto.UpdateArticleRequest;
-import com.example.blog.repository.BlogRepository;
 import com.example.blog.service.BlogService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class BlogController {
 
   private final BlogService blogService;
-  private final BlogRepository blogRepository;
 
   @PostMapping("/articles")
   public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request){
