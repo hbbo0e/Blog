@@ -4,11 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.blog.domain.Article;
 import com.example.blog.dto.AddArticleRequest;
+import com.example.blog.dto.UpdateArticleRequest;
 import com.example.blog.repository.BlogRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
@@ -22,6 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
@@ -140,5 +143,38 @@ class BlogControllerTest {
     List<Article> articles = blogRepository.findAll();
 
     assertThat(articles).isEmpty();
+  }
+
+  @DisplayName("updateArticle: 블로그 글 수정에 성공한다.")
+  @Test
+  public void updateArticle() throws Exception{
+    // given
+    final String url = "/api/article/{id}";
+    final String title = "title";
+    final String content = "content";
+
+    Article savedArticle = blogRepository.save(Article.builder()
+        .title(title)
+        .content(content)
+        .build());
+
+    final String newTitle = "new Title";
+    final String newContent = "new Content";
+
+    UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
+
+    // when
+    ResultActions result = mockMvc.perform(put(url, savedArticle.getId())
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .content(objectMapper.writeValueAsString(request)));
+
+    // then
+    result.andExpect(status().isOk());
+
+    Article article = blogRepository.findById(savedArticle.getId())
+        .orElseThrow(() -> new IllegalArgumentException("Article not found"));
+
+    assertThat(article.getTitle()).isEqualTo(newTitle);
+    assertThat(article.getContent()).isEqualTo(newContent);
   }
 }
