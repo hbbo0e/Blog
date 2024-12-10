@@ -109,7 +109,6 @@ class BlogControllerTest {
         .build());
 
     // when
-    // 이거 get 에다가 pathVariable 한 거 맞낭?
     final ResultActions resultActions = mockMvc.perform(get(url, savedArticle.getId()));
 
     // then
