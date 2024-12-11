@@ -19,7 +19,7 @@
       <div class="card-body">
         <h5 class="card-title" th:text="${item.title}"></h5>
         <p class="card-text" th:text="${item.content}"></p>
-        <a href="#" class="btn btn-primary"> GO </a>
+        <a th:href="@{/article/{id}(id=${item.id})}" class="btn btn-primary"> GO </a>
       </div>
     </div>
     </br>
