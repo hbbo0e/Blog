@@ -25,5 +25,7 @@ spring:
     init:
       mode: always
 
-
+jwt:
+  issuer: 44goodluck44@gmail.com
+  secret_key: blog-springbbot
 #  http://localhost:8080/h2-console
