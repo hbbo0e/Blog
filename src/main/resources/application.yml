@@ -25,6 +25,17 @@ spring:
     init:
       mode: always
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 663642..
+            client-secret: GOCSP...
+            scope:
+              - email
+              - profile
+
 jwt:
   issuer: 44goodluck44@gmail.com
   secret_key: blog-springbbot
