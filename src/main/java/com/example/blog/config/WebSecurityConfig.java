@@ -13,6 +13,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+/**
+ * oauth2 와 jwt 를 함께 사용하려면 기존 스프링 시큐리티를 구현하며 작성한 설정이 아니라 다른 설정을 사용해야 함
+ * oauth2, jwt 에 맞게 설정 파일 수정 위하여 주석 처리 -> WebOAuthSecurityConfig 작성
+ */
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
