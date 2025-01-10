@@ -1,14 +1,7 @@
 package com.example.blog.domain;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.util.Collection;
-import java.util.List;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,10 +10,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
+
 @Table(name = "users")
-@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Entity
 public class User implements UserDetails {
 
   @Id
@@ -34,11 +30,23 @@ public class User implements UserDetails {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "nickname", unique = true)
+  private String nickname;
+
   @Builder
-  public User(String email, String password, String auth) {
+  public User(String email, String password, String nickname) {
     this.email = email;
     this.password = password;
+    this.nickname = nickname;
   }
+
+  public User update(String nickname) {
+    this.nickname = nickname;
+
+    return this;
+  }
+
+
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -51,13 +59,13 @@ public class User implements UserDetails {
   }
 
   @Override
-  public String getPassword(){
+  public String getPassword() {
     return password;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-      return true;
+    return true;
   }
 
   @Override

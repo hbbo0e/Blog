@@ -25,7 +25,18 @@ spring:
     init:
       mode: always
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+            scope:
+              - email
+              - profile
+
 jwt:
-  issuer: 44goodluck44@gmail.com
+  issuer: sombbo10@gmail.com
   secret_key: blog-springbbot
 #  http://localhost:8080/h2-console
